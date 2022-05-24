@@ -13,18 +13,18 @@
 			
 <p>
       <label for="forbrukningstyp">forbrukningstyp </label>
-          <input type="text" class="form-control" name="forbrukningstyp" id="forbrukningstyp" placeholder=" brÃ¤forbrukningstyp " value="" required>
+          <input type="text" class="form-control" name="forbrukningstyp" id="forbrukningstyp" placeholder=" brÃ¤nsle " value="" required>
 
      
     </p>
       <p>
       <label for="nyckelkod">nyckelkod</label>
-       <input type="text"  class="forbrukningstyp" name="nyckelkod" id="nyckelkod" placeholder="forbrukningstyp" value="" required>
+       <input type="text"  class="forbrukningstyp" name="nyckelkod" id="nyckelkod" placeholder="Phone" value="" required>
 
     </p>
     <p>
       <label for="varde">värde</label>
-       <input type="text"  class="varde" name="varde" id="varde" placeholder="varde" value="" required>
+       <input type="text"  class="varde" name="varde" id="varde" placeholder="Phone" value="" required>
 
     </p>
     <p>
@@ -33,24 +33,23 @@
     </p>
     <p>
       <label for="period">period</label>
-        <input type="text"  class="period" name="period" id="period" placeholder="period" value="" required>
+        <input type="text"  class="period" name="period" id="period" placeholder="enhet" value="" required>
     </p>
     
      <p>
       <label for="tidpunkt">tidpunkt</label>
-        <input type="text"  class="tidpunkt" name="tidpunkt" id="tidpunkt" placeholder="tidpunkt" value="" required>
+        <input type="text"  class="tidpunkt" name="tidpunkt" id="tidpunkt" placeholder="enhet" value="" required>
     </p>
     
     
     
      <p>
       <label for="detaljniva">detaljnivå</label>
-      <input type="text"  class="detaljniva" name="detaljniva" id="detaljniva" placeholder="detaljniva" value="" required>
+      <input type="text"  class="detaljniva" name="detaljniva" id="detaljniva" placeholder="enhet" value="" required>
     </p>
 
-
+                <button id="submit" type="submit"  > Submit</button>
 			
-			<button id="submit" type="submit"  > Submit</button>
 		</form>
 	</center>
 </body>

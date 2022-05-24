@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-	<title>Insert Page page</title>
-</head>
 <script type="text/javascript">
-
 function tidrun (){
 let str1 = localStorage.getItem("theData1");
 let measurement1 = new Date();
@@ -14,29 +7,20 @@ str1 = "Start of textfile: \n";
 str1 = localStorage.getItem("theData1");
 str1 += measurement1 + "\n";
 localStorage.setItem("theData1", str1);
-window.location.assign('http://localhost/mysql/');
+window.location.assign('http://localhost/mongodb/');
     
 }
+
    
 </script>
-<body>
-	<center>
-		<?php
-
-		// servername => localhost
-		// username => root
-		// password => empty
-		// database name => staff
-		$conn = mysqli_connect("localhost", "root", "", "db_contact");
-		
-		// Check connection
-		if($conn === false){
-			die("ERROR: Could not connect. "
-				. mysqli_connect_error());
-		}
-		
-		// Taking all 5 values from the form data(input)
-        $id = '0';
+<?php
+require 'vendor/autoload.php'; 
+    try {
+        $client = new MongoDB\Client;
+        $companydb = $client->companydb;
+        $empcollection = $companydb->empcollection;
+        $number =  1;
+        $id = $number + 1;
 		$forbrukningstyp = $_REQUEST['forbrukningstyp'];
 		$nyckelkod = $_REQUEST['nyckelkod'];
 		$varde = $_REQUEST['varde'];
@@ -44,28 +28,20 @@ window.location.assign('http://localhost/mysql/');
 		$period = $_REQUEST['period'];
         $tidpunkt = $_REQUEST['tidpunkt'];
         $detaljniva = $_REQUEST['detaljniva'];
-		
-		// Performing insert query execution
-		// here our table name is college
-        
 
-        $sql = "INSERT INTO `tbl_contact` (`Id`,`forbrukningstyp`, `nyckelkod`, `varde`, `enhet`, `period`, `tidpunkt`, `detaljniva`) VALUES ('0', '$forbrukningstyp', '$nyckelkod', '$varde', '$enhet', '$period', '$tidpunkt', '$detaljniva' )";
-		
-		if(mysqli_query($conn, $sql)){
-			echo "<h3>data stored in a database successfully."
-				. " Please browse your localhost php my admin"
-				. " to view the updated data</h3>";
-                echo "<script> tidrun(); </script>";
+        $insertOneResult = $empcollection->insertOne(
+    [ 'forbrukningstyp' => $forbrukningstyp, 'nyckelkod' => $nyckelkod, 'varde' =>$varde, 'enhet' => $enhet, 'period' => $period, 'tidpunkt' => $tidpunkt, 'detaljniva' => $detaljniva]
+);
+printf("Inserted %d documents", $insertOneResult->getInsertedCount());
 
-		} else{
-			echo "ERROR:Sorry $sql. "
-				. mysqli_error($conn);
-		}
-		
-		// Close connection
-		mysqli_close($conn);
-		?>
-	</center>
-</body>
+var_dump($insertOneResult->getInsertedId());
+      
+        echo "<script> tidrun(); </script>";
+    }
+    catch (Throwable $e) {
+        // catch throwables when the connection is not a success
+        echo "Captured Throwable for connection : " . $e->getMessage() . PHP_EOL;
+    }
 
-</html>
+
+?>
