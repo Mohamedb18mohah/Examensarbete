@@ -1,0 +1,112 @@
+// ==UserScript==
+// @name         Mongodb_old
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        http://localhost/mongodb/
+// @grant        none
+// @require      https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js
+
+// ==/UserScript==
+
+(function() {
+    'use strict';
+      // Importantly, we measure first and then store the value so we do not poison the well with our measurements
+
+
+
+    var counter1 = parseInt(localStorage.getItem('counter'));
+    if(localStorage.getItem('blogcounter') == null){
+        localStorage.setItem('blogcounter', 0);
+    }
+    localStorage.setItem('blogcounter', counter1 + 1);
+
+
+
+    let str3=localStorage.getItem("olddata");
+    if (localStorage.getItem("counter1") == null) {
+       localStorage.setItem("counter1", 0);
+   }
+
+    if (localStorage.getItem("iterations") == null) {
+       localStorage.setItem("iterations", 0);
+   }
+
+    const iterations = parseInt(localStorage.getItem("iterations"));
+    const counter = parseInt(localStorage.getItem("counter1"));
+
+
+
+    startreloading()
+
+   $('#autoload').on('click', function() {
+
+
+       localStorage.setItem("iterations", document.getElementById("reloadcounter").value);
+       startreloading()
+   });
+    function startreloading() {
+        let measurement=new Date();
+        measurement = measurement.getTime();
+      const iterations = parseInt(localStorage.getItem("iterations"));
+      const counter = parseInt(localStorage.getItem("counter1"));
+      let cnt=parseInt(localStorage.getItem("Counter"));
+        if(cnt>iterations){
+            localStorage.setItem("Counter",0);
+            localStorage.setItem("counter1",0);
+        }else{
+            if(isNaN(cnt)) cnt=0;
+            if(cnt==0){
+                str3="Start of textfile: \n";
+                localStorage.setItem("Oldval",measurement);
+            }else{
+                var old=new Date();
+                old = old.setTime(localStorage.getItem("Oldval"));
+                var delta=measurement-old;
+                str3=localStorage.getItem("olddata");
+                str3+=  measurement +"\n";
+            }
+            // Increase counter and save data to local storage
+            cnt++;
+            localStorage.setItem("Counter",cnt);
+            localStorage.setItem("counter1",cnt);
+            localStorage.setItem("olddata",str3);
+            localStorage.setItem("Oldval",measurement);
+
+            const data1 = [
+ {
+   "forbrukningstyp": "EL",
+   "nyckelkod": 50801,
+   "varde": 893376.799999,
+   "enhet": "kWh",
+   "period": 202010,
+   "tidpunkt": "2020-10-01T00:00:00+00:00",
+   "detaljniva": "Dag"
+ },
+
+                ]
+            // Reload page!
+
+            var datablog = data1[counter];
+            var forbrukningstyp = datablog.forbrukningstyp.toString();
+             var nyckelkod = datablog.nyckelkod.toString();
+             var varde = datablog.varde.toString();
+             var enhet = datablog.enhet.toString();
+             var period = datablog.period.toString();
+             var tidpunkt = datablog.tidpunkt.toString();
+             var detaljniva = datablog.detaljniva.toString();
+            document.getElementById('forbrukningstyp').value= forbrukningstyp;
+            document.getElementById('nyckelkod').value= nyckelkod;
+            document.getElementById('varde').value= varde;
+            document.getElementById('enhet').value= enhet;
+            document.getElementById('period').value= period;
+            document.getElementById('tidpunkt').value= tidpunkt;
+            document.getElementById('detaljniva').value= detaljniva;
+
+           document.getElementById('submit').click();
+
+        }
+    }
+})();
+
